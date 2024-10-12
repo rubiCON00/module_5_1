@@ -2,6 +2,11 @@ from module2_7  import  value
 
 
 class House:
+    houses_history = []
+    def __new__(cls, *args, **kwargs):
+        cls.houses_history.append(args[0])
+        print(*cls.houses_history)
+        return super().__new__(cls)
     def  __init__(self, name, number_of_floors):
         self.name = name
         self.number_of_floors = number_of_floors
@@ -46,6 +51,8 @@ class House:
             self.number_of_floors += value.number_of_floors
         return self
 
+    def __del__(self):
+        print(self.name, ' снесён, но он останется в истории')
 
 
 
@@ -66,5 +73,8 @@ print(h1!=h2)
 h1 = h1 + value
 print(h1)
 print(h1 == h2)
-
-
+del h1
+print(House.houses_history[0])
+print(House.houses_history[-1])
+del h2
+print(House.houses_history)
